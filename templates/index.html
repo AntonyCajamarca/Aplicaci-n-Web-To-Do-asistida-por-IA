@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitácora · TO-DO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <div class="ledger">
+
+    <header class="ledger__head">
+      <div class="ledger__title">
+        <span class="ledger__eyebrow">bitácora diaria</span>
+        <h1>Tareas</h1>
+      </div>
+      <div class="ledger__tally" aria-live="polite">
+        <span id="count-pending" class="tally__num">0</span>
+        <span class="tally__label">pendientes</span>
+      </div>
+    </header>
+
+    <form id="form-new" class="entry" autocomplete="off">
+      <span class="entry__mark" aria-hidden="true">+</span>
+      <input
+        id="input-title"
+        class="entry__title"
+        type="text"
+        placeholder="Escribe una tarea nueva…"
+        maxlength="255"
+        required
+      >
+      <input
+        id="input-description"
+        class="entry__desc"
+        type="text"
+        placeholder="Nota o detalle (opcional)"
+        maxlength="1024"
+      >
+      <button type="submit" class="entry__submit">Anotar</button>
+    </form>
+
+    <nav class="filters" role="tablist" aria-label="Filtrar tareas">
+      <button class="filters__btn is-active" data-filter="all" role="tab" aria-selected="true">Todas</button>
+      <button class="filters__btn" data-filter="pending" role="tab" aria-selected="false">Pendientes</button>
+      <button class="filters__btn" data-filter="done" role="tab" aria-selected="false">Hechas</button>
+    </nav>
+
+    <main>
+      <ul id="task-list" class="tasks" aria-live="polite"></ul>
+
+      <div id="empty-state" class="empty" hidden>
+        <p class="empty__line">La página está en blanco.</p>
+        <p class="empty__sub">Anota tu primera tarea arriba para empezar.</p>
+      </div>
+
+      <div id="loading-state" class="loading">
+        <span></span><span></span><span></span>
+      </div>
+    </main>
+
+    <p id="error-banner" class="error-banner" role="alert" hidden></p>
+
+  </div>
+
+  <!-- Plantilla de una fila de tarea (se clona por JS) -->
+  <template id="task-row-template">
+    <li class="task" data-id="">
+      <button class="task__check" type="button" aria-pressed="false" aria-label="Marcar como hecha">
+        <svg viewBox="0 0 24 24" class="task__check-svg">
+          <path class="task__check-path" d="M4 12.5L9.5 18L20 6" />
+        </svg>
+      </button>
+
+      <div class="task__body">
+        <p class="task__title"></p>
+        <p class="task__desc"></p>
+      </div>
+
+      <span class="task__time"></span>
+
+      <button class="task__edit" type="button" aria-label="Editar tarea">Editar</button>
+      <button class="task__delete" type="button" aria-label="Eliminar tarea">Eliminar</button>
+    </li>
+  </template>
+
+  <script type="module" src="/static/js/api.js"></script>
+  <script type="module" src="/static/js/render.js"></script>
+  <script type="module" src="/static/js/app.js"></script>
+</body>
+</html>
